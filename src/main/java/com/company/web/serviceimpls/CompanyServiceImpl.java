@@ -15,6 +15,7 @@ public class CompanyServiceImpl implements CompanyService{
 	public boolean join(EmployeeBean param) {
 		System.out.println(6);
 		return false;
+		
 	}
 
 	@Override
