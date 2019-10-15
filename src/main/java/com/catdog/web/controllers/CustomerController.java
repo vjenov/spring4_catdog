@@ -24,6 +24,7 @@ public class CustomerController {
 		return "index";
 	}
 	
+	
 	@GetMapping("/info")
 	public String findCustomerByCid(@RequestParam("cid") String cid, @RequestParam("pwd") String pwd) {
 		return "index";
