@@ -25,8 +25,6 @@ public class HomeController {
 	@GetMapping("/") // 스프링 4.3버전 이후부터 나온 문법으로 위와 같은 기능
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome {}!", "HomeController");
-		int count = customerService.countCustomers();
-		model.addAttribute("count", count);
 		return "index";
 	}
 	
