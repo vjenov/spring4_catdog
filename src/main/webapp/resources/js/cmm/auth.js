@@ -1,61 +1,85 @@
 "use strict";
-var auth = auth || {};
+var auth = auth || {}
 auth = (()=>{
-    let _, js, auth_vuejs
-
+	const WHEN_ERR = '호출하는 JS 파일을 찾지 못했습니다.'
+    let _, js, auth_vue_js
     let init = ()=>{
         _ = $.ctx()
         js = $.js()
-        auth_vuejs = $.js() + '/vue/auth_vue.js'
+        auth_vue_js = js+'/vue/auth_vue.js'
     }
-    
     let onCreate =()=>{
         init()
-        $('#a_go_join').click(()=>{
-            alert('회원가입 클릭!!')
-            $.when(
-			$.getScript(auth_vuejs)
-		)
-		.done(()=>{
-			 $('head')
-		        .html(auth_vue.join_head())
-		            $('body')
-		        .html(auth_vue.join_body())
-			}
-		)
-		.fail(()=>{
-			alert(WHEN_ERR)
-			}			
-		)
-           
-            $('<button>',{
-                text : 'Continue to checkout',
-                href : '#',
-                click : e=>{
-                	e.preventDefault();
-                	let data = {aid : $('#aid').val(), pwd : $('#pwd').val()}
-                	alert('전송아이디: '+data.aid)
-                    $.ajax({
-                    	url : _+'/admin/join',
-                    	type : 'POST',
-                    	dataType : 'json',
-                    	data : JSON.stringify(data),
-                    	contentType : 'application/json',
-                    	success : d => {
-                    		alert('AJAX 성공 아이디: '+d.aid+', 성공비번: '+d.pwd);
-                    	},
-                    	error : e => {
-                    		alert('AJAX 실패');
-                    	}
-                    })
-                }
-            })
-            .addClass('btn btn-primary btn-lg btn-block')
-            .appendTo('#btn_join')
-            
-          
-            
-        });
+        $.getScript(auth_vue_js).done(()=>{
+        	setContentView()
+    		$('#a_go_join').click(e=>{
+         		e.preventDefault()
+         		join()
+    		})
+        }).fail(()=>{alert(WHEN_ERR)})
     }
-    return {onCreate : onCreate}
+    let setContentView =()=>{
+    	 login()
+    }
+    let join =()=>{
+    	$('head').html(auth_vue.join_head())
+        $('body').html(auth_vue.join_body())
+        $('<button>',{
+            text : 'Continue to checkout',
+            href : '#',
+            click : e=>{
+            	e.preventDefault();
+            	let data = {aid : $('#aid').val(), pwd : $('#pwd').val()}
+            	alert('전송아이디: '+data.aid)
+                $.ajax({
+			    	url : _+'/admin/join',
+			    	type : 'POST',
+			    	dataType : 'json',
+			    	data : JSON.stringify(data),
+			    	contentType : 'application/json',
+			    	success : d => {
+			    		alert('AJAX 성공 아이디: '+d.aid+', 성공비번: '+d.pwd)
+			    		login()
+			    	},
+			    	error : e => {
+			    		alert('AJAX 실패')
+			    	}
+            	})
+                
+            }
+        })
+        .addClass('btn btn-primary btn-lg btn-block')
+        .appendTo('#btn_join')
+    }
+    let login =()=>{
+    	let x = {css: $.css(), img: $.img()}
+    	$('head').html(auth_vue.login_head(x))
+        $('body').addClass('text-center')
+        .html(auth_vue.login_body(x))
+        $('<button>',{
+        	type : "submit",
+        	text : "Sign in",
+        	click : e => {
+        		e.preventDefault()
+        		let data = {aid : $('#aid').val(), pwd : $('#pwd').val()}
+            	alert('전송아이디: '+data.aid)
+                $.ajax({
+			    	url : _+'/admin/login',
+			    	type : 'POST',
+			    	dataType : 'json',
+			    	data : JSON.stringify(data),
+			    	contentType : 'application/json',
+			    	success : d => {
+			    		alert('AJAX 성공 아이디: '+d.aid+', 성공비번: '+d.pwd)
+			    	},
+			    	error : e => {
+			    		alert('AJAX 실패')
+			    	}
+            	})
+        	}
+        })
+        .addClass("btn btn-lg btn-primary btn-block")
+        .appendTo('#btn_login')
+    }
+    return {onCreate, join, login}
 })();

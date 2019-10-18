@@ -31,4 +31,13 @@ public class AdminController {
 		Logger.info("map에 담긴 아이디 & 비번", map.get("aid")+", " + map.get("pwd"));
 		return map;
 	}
+	@PostMapping("/login")
+	public @ResponseBody Map<?,?> login(@RequestBody AdminDTO admin) {
+		Logger.info("AJAX가 보낸 아이디 & 비번 {}", admin.getAid()+", "+ admin.getPwd());
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("aid", admin.getAid());
+		map.put("pwd", admin.getPwd());
+		Logger.info("map에 담긴 아이디 & 비번", map.get("aid")+", " + map.get("pwd"));
+		return map;
+	}
 }
