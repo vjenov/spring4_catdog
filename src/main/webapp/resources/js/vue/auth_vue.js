@@ -93,26 +93,27 @@ auth_vue = {
         '            <label for="aid">ADMINID</label>'+
         '            <input type="text" class="form-control" id="aid" placeholder="" value="" required="">'+
         '            <div class="invalid-feedback">'+
-        '              Valid first name is required.'+
+        '              Valid aid is required.'+
         '            </div>'+
         '          </div>'+
         '          <div class="col-md-6 mb-3">'+
         '            <label for="pwd">PASSWORD</label>'+
         '            <input type="text" class="form-control" id="pwd" placeholder="" value="" required="">'+
         '            <div class="invalid-feedback">'+
-        '              Valid last name is required.'+
+        '              Valid pwd is required.'+
         '            </div>'+
         '          </div>'+
         '        </div>'+
         '        <div class="mb-3">'+
-        '          <label for="username">Username</label>'+
+        '          <label for="pname">Username</label>'+
+        '          <input type="text" class="form-control" id="pname" placeholder="" value="" required="">'+
+        '            <div class="invalid-feedback">'+
+        '              Valid username is required.'+
         '          <div class="input-group">'+
         '            <div class="input-group-prepend">'+
         '              <span class="input-group-text">@</span>'+
         '            </div>'+
-        '            <input type="text" class="form-control" id="username" placeholder="Username" required="">'+
         '            <div class="invalid-feedback" style="width: 100%;">'+
-        '              Your username is required.'+
         '            </div>'+
         '          </div>'+
         '        </div>'+
@@ -287,6 +288,8 @@ auth_vue = {
 		'    <div id="btn_login"></div>'+
 		'    <p class="mt-5 mb-3 text-muted">© 2017-2019</p>'+
 		'  </form>'
-		
-	}	
+	},
+	my_page : d=>{
+		return '	<h1>안녕 마이페이지입니다'+d.aid+d.pwd+d.pname+'</h1>'
+	} 
 };

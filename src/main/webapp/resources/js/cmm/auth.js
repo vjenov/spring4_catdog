@@ -29,7 +29,7 @@ auth = (()=>{
             href : '#',
             click : e=>{
             	e.preventDefault();
-            	let data = {aid : $('#aid').val(), pwd : $('#pwd').val()}
+            	let data = {aid : $('#aid').val(), pwd : $('#pwd').val(), pname : $('#pname').val()}
             	alert('전송아이디: '+data.aid)
                 $.ajax({
 			    	url : _+'/admin/join',
@@ -38,7 +38,7 @@ auth = (()=>{
 			    	data : JSON.stringify(data),
 			    	contentType : 'application/json',
 			    	success : d => {
-			    		alert('AJAX 성공 아이디: '+d.aid+', 성공비번: '+d.pwd)
+			    		alert('AJAX 성공 아이디: '+d.aid+', 성공비번: '+d.pwd+', 성공이름: '+d.pname)
 			    		login()
 			    	},
 			    	error : e => {
@@ -61,7 +61,7 @@ auth = (()=>{
         	text : "Sign in",
         	click : e => {
         		e.preventDefault()
-        		let data = {aid : $('#aid').val(), pwd : $('#pwd').val()}
+        		let data = {aid : $('#aid').val(), pwd : $('#pwd').val(), pname : $('#pname').val()}
             	alert('전송아이디: '+data.aid)
                 $.ajax({
 			    	url : _+'/admin/login',
@@ -70,7 +70,8 @@ auth = (()=>{
 			    	data : JSON.stringify(data),
 			    	contentType : 'application/json',
 			    	success : d => {
-			    		alert('AJAX 성공 아이디: '+d.aid+', 성공비번: '+d.pwd)
+			    		alert(d.pname + '님 환영합니다.')
+			    		mypage(d)
 			    	},
 			    	error : e => {
 			    		alert('AJAX 실패')
@@ -81,5 +82,8 @@ auth = (()=>{
         .addClass("btn btn-lg btn-primary btn-block")
         .appendTo('#btn_login')
     }
-    return {onCreate, join, login}
+    let mypage =d=>{
+    	$('h1').html(auth_vue.my_page(d))
+    }
+    return {onCreate, join, login, mypage}
 })();
